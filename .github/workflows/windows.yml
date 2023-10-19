@@ -23,7 +23,11 @@ jobs:
     - name: Build
       shell: cmd
       run: msbuild Osiris.sln /p:Platform=x86 /p:Configuration=${{ matrix.configuration }} ${{ env.toolset }}
-
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: msbuild
+        path: D:\a\Osiris\Osiris\Release
   cmake:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -46,3 +50,8 @@ jobs:
       run: cmake --build build --config ${{ matrix.configuration }}
     - name: run unit tests
       run: ctest --test-dir build --output-on-failure --schedule-random -j $env:NUMBER_OF_PROCESSORS
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: msbuild
+        path: D:\a\Osiris\Osiris\Release
